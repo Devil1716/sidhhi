@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>
+        Special Message
+    </title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Message</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #E6E6FA, #B0E0E6);
+        font-family: 'Arial', sans-serif;
+    }
+
+    .login-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .bear-img {
+        width: 150px;
+        margin-bottom: 1rem;
+        border-radius: 50%;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    input {
+        padding: 0.8rem;
+        border: 2px solid #E6E6FA;
+        border-radius: 10px;
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 0.8rem;
+        border: none;
+        border-radius: 10px;
+        background-color: #B0E0E6;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        background-color: #FFB6C1;
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        transition: 0.5s;
+    }
+
+    button:hover::before {
+        left: 100%;
+    }
+
+    .proposal-page {
+        text-align: center;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 800px;
+        margin: 2rem;
+    }
+
+    .proposal-img {
+        width: 250px;
+        margin: 1.5rem 0;
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .proposal-img:hover {
+        transform: scale(1.05);
+    }
+
+    .button-container {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .yes-btn {
+        background-color: #FFB6C1;
+        padding: 1rem 3rem;
+    }
+
+    .yes-btn:hover {
+        background-color: #FF69B4;
+        transform: scale(1.1) rotate(2deg);
+    }
+
+    .no-btn {
+        background-color: #B0E0E6;
+        padding: 1rem 3rem;
+        transition: all 0.3s ease;
+    }
+
+    .no-btn:hover {
+        background-color: #87CEEB;
+        transform: scale(0.95) rotate(-2deg);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .poem-container {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(176, 224, 230, 0.3);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .poem {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        white-space: pre-line;
+        color: #666;
+        margin: 1.5rem 0;
+    }
+
+    .hearts {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    #response-message {
+        margin-top: 2rem;
+        padding: 1.5rem;
+    }
+
+    #response-message h2 {
+        color: #FF69B4;
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+    }
+
+    #response-message h3 {
+        color: #FF69B4;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    #response-message p {
+        color: #666;
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+
+    :root {
+        --primary-color: #E6E6FA; 
+        --secondary-color: #B0E0E6; 
+    }
+
+    .final-message {
+        margin-top: 2rem;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(176, 224, 230, 0.3);
+        text-align: center;
+    }
+
+    .final-text {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #666;
+        margin: 1.5rem 0;
+        font-style: italic;
+    }
+
+    .broken-heart {
+        font-size: 4rem;
+        margin: 2rem 0;
+        animation: heartbeat 1.5s infinite;
+    }
+
+    .acceptance-message {
+        margin-top: 2rem;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
+        text-align: center;
+        animation: poemFade 1s ease-in-out;
+    }
+
+    .love-letter {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    .romantic-text {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #666;
+        margin: 1.5rem 0;
+        text-align: left;
+        font-style: italic;
+    }
+
+    .floating-hearts {
+        font-size: 2rem;
+        margin: 2rem 0;
+        animation: floatingHearts 2s infinite ease-in-out;
+    }
+
+    .celebration {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+    }
+
+    .celebration-emoji {
+        position: fixed;
+        top: -20px;
+        font-size: 1.5rem;
+        animation: celebrationDrop linear forwards;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes poemFade {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+    }
+
+    @keyframes heartbeat {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes celebrationDrop {
+        0% {
+            transform: translateY(-100vh);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+    }
+
+    @keyframes floatingHearts {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0); }
+    }
+
+    @keyframes imageFade {
+        0% {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }  
+
+    @keyframes sadShake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    @keyframes happyBounce {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-10px) scale(1.05); }
+    }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="https://media1.tenor.com/m/3wox1dmyNQsAAAAC/bai.gif" alt="Cute Bear" class="bear-img">
+        <h3>❤️Open a secret message❤️</h3>
+        <div class="login-form">
+            <input type="text" id="username" placeholder="Name" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="checkCredentials()">Enter</button>
+        </div>
+    </div>
+
+    <div id="proposal" class="proposal-page hidden">
+        <div class="hearts"></div>
+        <img src="https://media1.tenor.com/m/lnEm2B68yYUAAAAC/sad-cute.gif" alt="Hugging Bears" class="proposal-img">
+        <h1>Will u talk to me?💝</h1>
+        <p class="proposal-text">What did you wanted to but for us??</p>
+        <div class="button-container">
+            <button onclick="showMessage('yes')" class="yes-btn">Car💖</button>
+            <button onclick="showMessage('no')" class="no-btn"> Home 🥺</button>
+        </div>
+        <div id="response-message" class="hidden"></div>
+    </div>
+
+    <script>
+    const CORRECT_USERNAME = "Arjun";
+    const CORRECT_PASSWORD = "0104";
+
+    const sadBearImages = [
+        "https://media1.tenor.com/m/lnEm2B68yYUAAAAC/sad-cute.gif",
+        "https://media.tenor.com/PIaJrC68f6IAAAAi/teddy2.gif",
+        "https://media.tenor.com/B1LnFOr4qLMAAAAi/%E4%B8%80%E4%BA%8C%E5%B8%83%E5%B8%83-%E5%93%AD%E5%93%AD.gif",
+        "https://media.tenor.com/RJgIui1E_2QAAAAi/teddy-bear.gif"
+    ];
+
+    const happyBearImages = [
+        "https://media1.tenor.com/m/mXkpFJAlZgEAAAAC/milk-and-mocha-milk-mocha.gif",
+        "https://media.tenor.com/FQr-5UQUIr8AAAAi/mocha-and.gif",
+        "https://media.tenor.com/zvoZpK0mTzwAAAAi/milk-and-mocha-bear-couple.gif"
+    ];
+
+    const poems = [
+        
+    ];
+
+    const pleadingHeaders = [
+        
+    ];
+
+    const noButtonTexts = [
+     
+    ];
+
+    let currentPoemIndex = 0;
+    let currentHeaderIndex = 0;
+    let currentNoButtonIndex = 0;
+    let currentBearIndex = 0;
+    let currentSadBearIndex = 0;
+    let happyImageInterval;
+
+    function checkCredentials() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+            document.querySelector('.login-container').classList.add('hidden');
+            document.getElementById('proposal').classList.remove('hidden');
+            createHearts();
+            setupNoButtonHover();
+        } else {
+            alert('Incorrect name or password! Try again 💕');
+        }
+    }
+
+    function setupNoButtonHover() {
+        const noButton = document.querySelector('.no-btn');
+        
+        // For desktop hover
+        noButton.addEventListener('mouseenter', changeNoButtonText);
+        noButton.addEventListener('mouseleave', resetNoButtonText);
+        
+        // For mobile touch
+        noButton.addEventListener('touchstart', changeNoButtonText);
+        noButton.addEventListener('touchend', resetNoButtonText);
+        
+        // Prevent default touch behavior to avoid sticky hover states
+        noButton.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+    }
+
+    function changeNoButtonText() {
+        const noButton = document.querySelector('.no-btn');
+        currentNoButtonIndex = (currentNoButtonIndex + 1) % noButtonTexts.length;
+        noButton.textContent = noButtonTexts[currentNoButtonIndex];
+    }
+
+    function resetNoButtonText() {
+        const noButton = document.querySelector('.no-btn');
+        noButton.textContent = 'No 🥺';
+    }
+
+
+    function createHearts() {
+        const heartsContainer = document.querySelector('.hearts');
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.style.position = 'absolute';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '-20px';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animation = 'float 4s linear forwards';
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }, 300);
+    }
+
+    function createCelebration() {
+        const colors = ['💖', '💝', '💗', '💕', '🎉', '✨'];
+        const celebrationContainer = document.createElement('div');
+        celebrationContainer.className = 'celebration';
+        document.body.appendChild(celebrationContainer);
+
+        for (let i = 0; i < 100; i++) {
+            setTimeout(() => {
+                const emoji = document.createElement('div');
+                emoji.className = 'celebration-emoji';
+                emoji.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                celebrationContainer.appendChild(emoji);
+
+                setTimeout(() => emoji.remove(), 3000);
+            }, i * 100);
+        }
+    }
+
+    function showMessage(response) {
+        const messageDiv = document.getElementById('response-message');
+        messageDiv.classList.remove('hidden');
+        const proposalImage = document.querySelector('.proposal-img');
+        
+        if (response === 'yes') {
+            let happyIndex = 0;
+            happyImageInterval = setInterval(() => {
+                proposalImage.src = happyBearImages[happyIndex];
+                proposalImage.style.animation = 'none';
+                proposalImage.offsetHeight;
+                proposalImage.style.animation = 'happyBounce 0.5s ease-in-out';
+                
+                happyIndex = (happyIndex + 1) % happyBearImages.length;
+            }, 2000);
+
+            messageDiv.innerHTML = `
+                <div class="acceptance-message">
+                    <h2>Yaaay! 🎉</h2>
+                    <div class="love-letter">
+                        <p>Thanks for understanding <3 </p>
+                        <p class="romantic-text">
+ <p>                     
+it was 1st April a shy girl walks to me and proposes me, a girl proposed me, i had butter flies in my stomach after that </p>
+<p>
+You know i used always think about u me and our kid arjun like that used be my favorite thing to do as if we were husband and wife, and fight like one too
+</p>
+<p>
+i never express my feelings to you because i wanted to keep it for our future so that we can make memories of that , like all the memories we can
+</p>
+<p>
+you remember you gave me a ring n my mom threw it, yes i paid the garbage collector rs 2000 so that he wont throw the waste and spent 2 days from evening 5 to night 9 finding the ring in the trash with torch
+</p>
+<p>
+you remember the bracelet you gave me and i for got in amity Mumbai, yes the same one i went back the next week to Mumbai, travelled in that rushed local train to Panvel, took a can till amity Mumbai and turned whole amity Mumbai upside down to find it back, i got suspended but it was worth it, because you gave it to me.
+</p>
+<p>
+the letters you gave me, i have every single one of them like i used to flex them in front of my friends that you gave me the handmade letters. a fucking flex even now i flex it you know 
+</p>
+<p>
+i remember you saying you like poetry, so i learnt for you but could never say it t you but here it is:
+</p>
+<p>
+In every crowd, your light shines through,  
+A masterpiece the heavens drew,  
+Your smile, a dawn of golden hue,  
+A song the angels surely knew.
+
+Your laughter weaves the sweetest air,  
+A melody beyond compare,  
+Your touch a balm, divinely rare,  
+Soft as a whispered, tender prayer.
+
+Your eyes, two realms of endless skies,  
+Hold galaxies and soft sunrise,  
+A single glance, and hope will rise,  
+A world reborn within your eyes.
+
+Your heart a flame both fierce and kind,  
+A rare, uncharted gold to find,  
+A garden blooming in the mind,  
+A lighthouse when the world's unkind.
+
+Oh, darling, you're my finest art,  
+The poem pulsing in my heart,  
+Forever perfect, set apart   
+My love, my muse, my sweetest start.
+</p>
+<p>
+i know we broke up 11 times in this 5 year relationship but i never did it wantedly but because of my health, i wanted you to have a better life and with my health condition you could never be happy is what i thought.
+</p>
+<p>
+i want you to be happy, you gave me a chance though u might not come back but i will wait till my death for for for real not joking anytime you need me i am here,
+</p>
+<p>
+but one promise you made and like the promise of me bring your first and last don't break this , please don't get physical with anyone you were and will be mine.
+</p>
+<p>
+last but not the least i trust in god you prayed for our togetherness, just don't forget me
+</p>
+<p>
+"I LOVE YOU MY BBYGIRL"
+</p>
+                            <div class="broken-heart">❤️</div>
+                        </p>
+                    </div>
+                </div>
+            `;
+            document.querySelector('.no-btn').style.display = 'none';
+            createCelebration();
+        } else {
+            if (happyImageInterval) {
+                clearInterval(happyImageInterval);
+            }
+
+            if (currentPoemIndex >= poems.length) {
+                proposalImage.src = "https://media.tenor.com/N9LQmbTKy50AAAAj/mochi-cute.gif";
+                messageDiv.innerHTML = `
+                    <div class="final-message">
+                        <h3>I guess this is goodbye... 💔</h3>
+                        <p class="final-text">
+                           I guess you dont remmeber
+                           refresh the page and try again
+                        </p>
+                        <div class="broken-heart">💔</div>
+                    </div>
+                `;
+                document.querySelector('.no-btn').style.display = 'none';
+                document.querySelector('.yes-btn').style.animation = 'fadeOut 2s forwards';
+            } else {
+                currentSadBearIndex = (currentSadBearIndex + 1) % sadBearImages.length;
+                proposalImage.src = sadBearImages[currentSadBearIndex];
+                
+                proposalImage.style.animation = 'none';
+                proposalImage.offsetHeight;
+                proposalImage.style.animation = 'sadShake 0.5s ease-in-out';
+                
+                messageDiv.innerHTML = `
+                    <div class="poem-container">
+                        <h3>${pleadingHeaders[currentHeaderIndex]}</h3>
+                        <p class="poem">${poems[currentPoemIndex]}</p>
+                    </div>
+                `;
+                
+                currentPoemIndex++;
+                currentHeaderIndex = (currentHeaderIndex + 1) % pleadingHeaders.length;
+                
+                const poemContainer = document.querySelector('.poem-container');
+                poemContainer.style.animation = 'none';
+                poemContainer.offsetHeight;
+                poemContainer.style.animation = 'poemFade 1s ease-in-out';
+            }
+        }
+    }
+    </script>
+</body>
+</html>
